@@ -24,7 +24,7 @@ class WhaleAlert:
             # min_value	int	Minimum USD value of transactions returned (value at time of transaction). Allowed minimum value varies per plan ($500k for Free, $100k for Personal).
             # limit	int	Maximum number of results returned. Default 100, max 100.
             # currency	string	Returns transactions for a specific currency code. Returns all currencies by default.
-        r = requests.get(restURI + '/transactions?api_key=' + key + '&start=' + str(now - 10) + '&limit=2')
+        r = requests.get(restURI + '/transactions?api_key=' + key + '&start=' + str(now - 1000) + '&limit=2')
         return r
 
     # Start the loop of receiving data
@@ -36,11 +36,11 @@ class WhaleAlert:
                     self.apikeys.append(self.apikeys.pop(0))
                 else:
                     break
-        
+
             if 'count' in g.json() and g.json()['count'] != 0:
                 print(int(time.time()), g.json())
             time.sleep(1)
-    
+
     # Load the keys from a file
     def loadKeys(self, filename):
         with open(filename) as f:
