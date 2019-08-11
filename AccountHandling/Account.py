@@ -13,6 +13,7 @@ class Account:
     def addOpenOrder(self, order):
         if not self.closing:
             self.openOrders.put(order)
+            self.submitOpenOrders()
             pass
         else:
             pass
@@ -21,6 +22,7 @@ class Account:
     def addCloseOrder(self, order):
         if len(self.openOrders) > len(self.closeOrders):
             self.closeOrders.put(order)
+            self.submitCloseOrders()
             pass
         else:
             pass
@@ -55,4 +57,3 @@ d = {
     'poloniex': '12323123'
 }
 a = Account(d)
-
