@@ -1,4 +1,5 @@
 import queue
+from Positions import Order
 
 class Account:
     # Initializes the Account
@@ -31,12 +32,12 @@ class Account:
     def submitOpenOrders(self):
         while len(self.openOrders) > 0:
             # execute order at head of queue
-            self.openOrders.get()
+            self.openOrders.get().execute()
     
     def submitCloseOrders(self):
         while len(self.closeOrders) > 0:
             # execute order at head of queue
-            self.closeOrders.get()
+            self.closeOrders.get().execute()
 
     # Close any open positions and stop opening positions
     def close(self):
