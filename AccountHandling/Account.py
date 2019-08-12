@@ -42,14 +42,12 @@ class Account:
     # Close any open positions and stop opening positions
     def close(self):
         self.closing = True
-        
         pass
 
     # Hard close on the account.
     # Liquidates all positions and shuts off account.
     def liquidate(self):
         self.closing  = True
-
         pass
 
     
