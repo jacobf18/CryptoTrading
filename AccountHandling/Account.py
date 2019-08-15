@@ -4,11 +4,24 @@ from Positions import Order
 class Account:
     # Initializes the Account
     # apiDict is a dictionary of exchanges and api keys
-    def __init__(self, apiDict):
-        self.apiDict = apiDict
+    def __init__(self):
+        self.apiDict = self.loadKeys('ApiKeys.txt')
         self.openOrders = queue.Queue()
         self.closeOrders = queue.Queue()
         self.closing = False
+
+
+    def loadKeys(self, fileName):
+        apiDict = {}
+        with open(fileName) as f:
+            for l in f.readlines():
+                key = l[:l.find(':')]
+                key = key.strip()
+                value = l[l.find(':'):]
+                value = value.strip()
+                value = value.replace('\n', '')
+                apiDict[key] = value
+        return apiDict
 
     # add an open order
     def addOpenOrder(self, order):
@@ -55,4 +68,6 @@ d = {
     'coinbase': 'askldjf',
     'poloniex': '12323123'
 }
-a = Account(d)
+
+a = Account()
+print(a.apiDict)
