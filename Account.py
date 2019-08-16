@@ -1,5 +1,5 @@
 import queue
-from Orders import LimitOrder
+from Orders import LimitBuyOrder, LimitSellOrder
 import ccxt
 
 class Account:

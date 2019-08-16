@@ -1,3 +1,5 @@
+from Orders import LimitBuyOrder, LimitSellOrder
+
 class ArbitragePosition:
     '''
         Exchange 1 has the overprices asset
