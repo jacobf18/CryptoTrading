@@ -1,15 +1,71 @@
 import queue
 from Positions import Order
+import ccxt
 
 class Account:
     # Initializes the Account
     # apiDict is a dictionary of exchanges and api keys
     def __init__(self):
-        self.apiDict = self.loadKeys('ApiKeys.txt')
+        self.apiDict = self.loadKeys('AccountHandling/ApiKeys.txt')
         self.openOrders = queue.Queue()
         self.closeOrders = queue.Queue()
         self.closing = False
 
+        ### Poloniex
+        # Instantiate the exchange class
+        self.poloniexClass = getattr(ccxt, 'poloniex')
+        self.poloniex = self.poloniexClass({
+            'apiKey': self.apiDict['Poloniex'][0],
+            'secret': self.apiDict['Poloniex'][1],
+            'timeout': 30000,
+            'enableRateLimit': True,
+        })
+        # Load the markets
+        self.poloniex.load_markets()
+        # Load the BTC/USDT market
+        self.btcusdPoloniex = self.poloniex.market('BTC/USDT')
+
+        '''
+        ### Kraken
+        self.krakenClass = getattr(ccxt, 'kraken')
+        self.kraken = self.krakenClass({
+            'apiKey': self.apiDict['Kraken'][0],
+            'secret': self.apiDict['Kraken'][1],
+            'timeout': 30000,
+            'enableRateLimit': True,
+        })
+        # Load the markets
+        self.kraken.load_markets()
+        # Load the BTC/USDT market
+        print(self.kraken.load_markets())
+        self.btcusdKraken = self.kraken.market('BTC/USDT')
+        '''
+        
+        ### Bittrex
+        self.bittrexClass = getattr(ccxt, 'bittrex')
+        self.bittrex = self.bittrexClass({
+            'apiKey': self.apiDict['Bittrex'][0],
+            'secret': self.apiDict['Bittrex'][1],
+            'timeout': 30000,
+            'enableRateLimit': True,
+        })
+        # Load the markets
+        self.bittrex.load_markets()
+        # Load the BTC/USDT market
+        self.btcusdBittrex = self.bittrex.market('BTC/USDT')
+
+        ### COSS
+        self.cossClass = getattr(ccxt, 'coss')
+        self.coss = self.cossClass({
+            'apiKey': self.apiDict['Coss'][0],
+            'secret': self.apiDict['Coss'][1],
+            'timeout': 30000,
+            'enableRateLimit': True,
+        })
+        # Load the markets
+        self.coss.load_markets()
+        # Load the BTC/USDT market
+        self.btcusdCoss = self.coss.market('BTC/USDT')
 
     def loadKeys(self, fileName):
         apiDict = {}
@@ -17,9 +73,11 @@ class Account:
             for l in f.readlines():
                 key = l[:l.find(':')]
                 key = key.strip()
-                value = l[l.find(':'):]
-                value = value.strip()
-                value = value.replace('\n', '')
+                value = []
+                apiKey = l[l.find(':')+1:l.find(',')]
+                value.append(apiKey.strip())
+                secretKey = l[l.find(',')+1:]
+                value.append(secretKey.strip().replace('\n', ''))
                 apiDict[key] = value
         return apiDict
 
@@ -34,7 +92,7 @@ class Account:
     
     # add a close order and check 
     def addCloseOrder(self, order):
-        if len(self.openOrders) > len(self.closeOrders):
+        if len(self.openOrders.queue) > len(self.closeOrders.queue):
             self.closeOrders.put(order)
             self.submitCloseOrders()
             pass
@@ -43,12 +101,12 @@ class Account:
 
     # submit orders
     def submitOpenOrders(self):
-        while len(self.openOrders) > 0:
+        while len(self.openOrders.queue) > 0:
             # execute order at head of queue
             self.openOrders.get().execute()
     
     def submitCloseOrders(self):
-        while len(self.closeOrders) > 0:
+        while len(self.closeOrders.queue) > 0:
             # execute order at head of queue
             self.closeOrders.get().execute()
 
@@ -62,12 +120,3 @@ class Account:
     def liquidate(self):
         self.closing  = True
         pass
-
-    
-d = {
-    'coinbase': 'askldjf',
-    'poloniex': '12323123'
-}
-
-a = Account()
-print(a.apiDict)

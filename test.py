@@ -1,9 +1,19 @@
-import queue
+# Import packages
+from AccountHandling.Account import Account
+from WhaleAlert.WhaleAlert import WhaleAlert
+from Positions.Order import Order
+import ccxt
 
-l = queue.Queue()
+if __name__ == '__main__':
+    # Test Account functionality
+    account = Account()
 
-l.put(1)
-l.put(2)
-print(l.get())
-print(l.get())
-print(l.full())
+    # Test Orders
+    order = Order(account.poloniex)
+
+    #account.addOpenOrder(order)
+
+    # Test WhaleAlert functionality
+    #w = WhaleAlert()
+
+    # Test Positions functionality

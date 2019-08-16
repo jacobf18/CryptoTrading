@@ -3,11 +3,11 @@ import json
 import time
 
 class WhaleAlert:
-    def __init__(self, file):
+    def __init__(self):
         # List of api keys
         self.apikeys = []
         # Loads the api keys from a file
-        self.loadKeys(file)
+        self.loadKeys('../ApiKeys.txt')
         pass
 
     # Receive data from api
