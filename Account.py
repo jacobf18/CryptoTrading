@@ -1,5 +1,5 @@
 import queue
-import Order
+from Orders import LimitOrder
 import ccxt
 
 class Account:
@@ -42,7 +42,7 @@ class Account:
         # Load the BTC/USDT market
         print(self.kraken.load_markets())
         self.btcusdKraken = self.kraken.market('BTC/USDT')
-        '''
+        
 
         ### Bittrex
         ## Does NOT have support for market orders
@@ -71,6 +71,7 @@ class Account:
         self.coss.load_markets()
         # Load the BTC/USDT market
         self.btcusdCoss = self.coss.market('BTC/USDT')
+        '''
 
     def loadKeys(self, fileName):
         apiDict = {}
