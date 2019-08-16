@@ -7,7 +7,7 @@ class WhaleAlert:
         # List of api keys
         self.apikeys = []
         # Loads the api keys from a file
-        self.loadKeys('../ApiKeys.txt')
+        self.loadKeys('../WhaleAlertApiKeys.txt')
         pass
 
     # Receive data from api

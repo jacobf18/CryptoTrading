@@ -1,17 +1,20 @@
 import queue
-from Positions import Order
+import Order
 import ccxt
 
 class Account:
     # Initializes the Account
     # apiDict is a dictionary of exchanges and api keys
     def __init__(self):
-        self.apiDict = self.loadKeys('AccountHandling/ApiKeys.txt')
+        self.apiDict = self.loadKeys('ApiKeys.txt')
         self.openOrders = queue.Queue()
         self.closeOrders = queue.Queue()
         self.closing = False
-
+        self.loadExchanges()
+    
+    def loadExchanges(self):
         ### Poloniex
+        ## Does NOT have support for market orders
         # Instantiate the exchange class
         self.poloniexClass = getattr(ccxt, 'poloniex')
         self.poloniex = self.poloniexClass({
@@ -40,8 +43,9 @@ class Account:
         print(self.kraken.load_markets())
         self.btcusdKraken = self.kraken.market('BTC/USDT')
         '''
-        
+
         ### Bittrex
+        ## Does NOT have support for market orders
         self.bittrexClass = getattr(ccxt, 'bittrex')
         self.bittrex = self.bittrexClass({
             'apiKey': self.apiDict['Bittrex'][0],
@@ -55,6 +59,7 @@ class Account:
         self.btcusdBittrex = self.bittrex.market('BTC/USDT')
 
         ### COSS
+        ## DOES have support for market orders
         self.cossClass = getattr(ccxt, 'coss')
         self.coss = self.cossClass({
             'apiKey': self.apiDict['Coss'][0],
@@ -102,13 +107,13 @@ class Account:
     # submit orders
     def submitOpenOrders(self):
         while len(self.openOrders.queue) > 0:
-            # execute order at head of queue
-            self.openOrders.get().execute()
+            # place order at head of queue
+            self.openOrders.get().place()
     
     def submitCloseOrders(self):
         while len(self.closeOrders.queue) > 0:
-            # execute order at head of queue
-            self.closeOrders.get().execute()
+            # place order at head of queue
+            self.closeOrders.get().place()
 
     # Close any open positions and stop opening positions
     def close(self):

@@ -1,7 +1,7 @@
 # Import packages
-from AccountHandling.Account import Account
+from Account import Account
 from WhaleAlert.WhaleAlert import WhaleAlert
-from Positions.Order import Order
+from Order import Order
 import ccxt
 
 if __name__ == '__main__':
@@ -9,7 +9,9 @@ if __name__ == '__main__':
     account = Account()
 
     # Test Orders
-    order = Order(account.poloniex)
+    order = Order(account.btcusdPoloniex)
+    print(account.apiDict)
+
 
     #account.addOpenOrder(order)
 
