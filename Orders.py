@@ -3,6 +3,7 @@ from ccxt import OrderNotFound
 from ccxt import OrderNotCached
 from abc import ABC, abstractmethod
 
+# Base class for all orders
 class Order(ABC):
     def __init__(self, exchange, symbol, amount):
         self.exchange = exchange
@@ -36,13 +37,11 @@ class Order(ABC):
         else:
             return 'None'
 
-
-
+# Limit Order to buy an asset
 class LimitBuyOrder(Order):
     def __init__(self, exchange, symbol, amount, price):
         super().__init__(exchange, symbol, amount)
         self.price = price
-        self.symbol = symbol
     
     def __str__(self):
         return 'Order[id: ' + self.id + ', status: ' + self.status() + ', price: ' + str(self.price) + ']'
@@ -51,13 +50,11 @@ class LimitBuyOrder(Order):
         self.exchange.createLimitBuyOrder(self.symbol, self.amount, self.price)
         pass
 
-        
-
+# Limit Order to sell an asset
 class LimitSellOrder(Order):
     def __init__(self, exchange, symbol, amount, price):
         super().__init__(exchange, symbol, amount)
         self.price = price
-        self.symbol = symbol
     
     def __str__(self):
         return 'Order[id: ' + self.id + ', status: ' + self.status() + ', price: ' + str(self.price) + ']'

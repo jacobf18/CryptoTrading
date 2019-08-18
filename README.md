@@ -20,3 +20,8 @@ Api keys and secret keys for the exchanges must be obtained and put into a file 
 ApiKeys.txt
 WhaleAlert/WhaleAlertApiKeys.txt
 
+# Classes Included
+## Orders
+### Fields
+`id` - 
+

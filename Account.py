@@ -91,7 +91,6 @@ class Account:
     def addOpenOrder(self, order):
         if not self.closing:
             self.openOrders.put(order)
-            self.submitOpenOrders()
             pass
         else:
             pass
@@ -100,21 +99,9 @@ class Account:
     def addCloseOrder(self, order):
         if len(self.openOrders.queue) > len(self.closeOrders.queue):
             self.closeOrders.put(order)
-            self.submitCloseOrders()
             pass
         else:
             pass
-
-    # submit orders
-    def submitOpenOrders(self):
-        while len(self.openOrders.queue) > 0:
-            # place order at head of queue
-            self.openOrders.get().place()
-    
-    def submitCloseOrders(self):
-        while len(self.closeOrders.queue) > 0:
-            # place order at head of queue
-            self.closeOrders.get().place()
 
     # Close any open positions and stop opening positions
     def close(self):
