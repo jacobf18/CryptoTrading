@@ -23,5 +23,8 @@ WhaleAlert/WhaleAlertApiKeys.txt
 # Classes Included
 ## Orders
 ### Fields
-`id` - 
-
+`id` - assigned to an order once it is placed
+`exchange` - exchange an order is placed on
+`symbol` - trading pair (e.g. "BTC/USD")
+`amount` - amount of base currency (base is currency on the left, quote is on the right)
+`price` - (only for limit orders) price in quote currency to execute at
