@@ -9,11 +9,15 @@ if __name__ == '__main__':
     account = Account()
 
     # Test Orders
-    limitBuyOrder = LimitBuyOrder(account.poloniex, 'BTC/USD', 0.0001, 100)
-    #print(account.apiDict)
 
-    account.addOpenOrder(limitBuyOrder)
-    print(limitBuyOrder)
+    #account.addOpenOrder(limitBuyOrder)
+    print('USDT')
+    print(account.poloniex.fetch_balance()['USDT'])
+    print('USDC')
+    print(account.poloniex.fetch_balance()['USDC'])
+
+    #limitBuyOrder = LimitBuyOrder(account.poloniex, 'USDT/USDC', 1, 1)
+    #print(limitBuyOrder.place())
 
     # Test WhaleAlert functionality
     #w = WhaleAlert()

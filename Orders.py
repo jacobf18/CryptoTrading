@@ -27,7 +27,6 @@ class Order(ABC):
             return False
     
     def status(self):
-        print(self.exchange)
         if self.exchange.has['fetchOrder']:
             try:
                 order = self.exchange.fetch_order(self.id)
@@ -47,8 +46,8 @@ class LimitBuyOrder(Order):
         return 'Order[id: ' + self.id + ', status: ' + self.status() + ', price: ' + str(self.price) + ']'
 
     def place(self):
-        self.exchange.createLimitBuyOrder(self.symbol, self.amount, self.price)
-        pass
+        self.id = self.exchange.createLimitBuyOrder(self.symbol, self.amount, self.price)
+        return self.__str__()
 
 # Limit Order to sell an asset
 class LimitSellOrder(Order):
@@ -61,4 +60,4 @@ class LimitSellOrder(Order):
 
     def place(self):
         self.id = self.exchange.createLimitSellOrder(self.symbol, self.amount, self.price)['id']
-        pass
+        return self.__str__()
