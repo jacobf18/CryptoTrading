@@ -27,4 +27,6 @@ WhaleAlert/WhaleAlertApiKeys.txt
 `exchange` - exchange an order is placed on  
 `symbol` - trading pair (e.g. "BTC/USD")  
 `amount` - amount of base currency (base is currency on the left, quote is on the right)  
-`price` - (only for limit orders) price in quote currency to execute at  
+`price` - (only for limit orders) price in quote currency to execute at
+## Account
+This compiles all account information into one class from multiple exchanges.  It handles the exchange classes of the ccxt libraries and closing out the account.  It also keeps track of orders.
