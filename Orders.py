@@ -46,7 +46,14 @@ class LimitBuyOrder(Order):
         return 'Order[id: ' + self.id + ', status: ' + self.status() + ', price: ' + str(self.price) + ']'
 
     def place(self):
-        self.id = self.exchange.createLimitBuyOrder(self.symbol, self.amount, self.price)
+        # Check if there is enough in the account balance to execute order
+        base = self.symbol[self.symbol.find('/'):]
+        required = self.amount * self.price
+        if self.exchange.fetch_balance()[base]['free'] < required:
+            print('Not enough base currency')
+        else:
+            # Place order on exchange
+            self.id = self.exchange.createLimitBuyOrder(self.symbol, self.amount, self.price)
         return self.__str__()
 
 # Limit Order to sell an asset
