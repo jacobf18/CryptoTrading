@@ -11,12 +11,11 @@ if __name__ == '__main__':
     # Test Orders
 
     #account.addOpenOrder(limitBuyOrder)
-    print('USDT')
-    print(account.poloniex.fetch_balance()['USDT'])
-    print('USDC')
-    print(account.poloniex.fetch_balance()['USDC'])
+    print('Poloniex: USDT', account.poloniex.fetch_balance()['USDT'])
+    print('Poloniex: USDC', account.poloniex.fetch_balance()['USDC'])
+    print('Bittrex: USDT', account.bittrex.fetch_balance()['USDT'])
 
-    #limitBuyOrder = LimitBuyOrder(account.poloniex, 'USDT/USDC', 1, 1)
+    #limitBuyOrder = LimitBuyOrder(account.poloniex, 'USDT/USDC', 13, 1)
     #print(limitBuyOrder.place())
 
     # Test WhaleAlert functionality

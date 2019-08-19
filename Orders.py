@@ -30,7 +30,7 @@ class Order(ABC):
         if self.exchange.has['fetchOrder']:
             try:
                 order = self.exchange.fetch_order(self.id)
-                return order['status']
+                return str(order['status'])
             except OrderNotCached:
                 return 'Not Cached'
         else:
@@ -47,7 +47,7 @@ class LimitBuyOrder(Order):
 
     def place(self):
         # Check if there is enough in the account balance to execute order
-        base = self.symbol[self.symbol.find('/'):]
+        base = self.symbol[self.symbol.find('/')+1:]
         required = self.amount * self.price
         if self.exchange.fetch_balance()[base]['free'] < required:
             print('Not enough base currency')

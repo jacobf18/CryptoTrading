@@ -28,6 +28,21 @@ class Account:
         # Load the BTC/USDT market
         self.btcusdPoloniex = self.poloniex.market('BTC/USDT')
 
+        ### Bittrex
+        ## Does NOT have support for market orders
+        # Instantiate the exchange class
+        self.bittrexClass = getattr(ccxt, 'bittrex')
+        self.bittrex = self.bittrexClass({
+            'apiKey': self.apiDict['Bittrex'][0],
+            'secret': self.apiDict['Bittrex'][1],
+            'timeout': 30000,
+            'enableRateLimit': True,
+        })
+        # Load the markets
+        self.bittrex.load_markets()
+        # Load the BTC/USDT market
+        self.btcusdBittrex = self.bittrex.market('BTC/USDT')
+
         '''
         ### Kraken
         self.krakenClass = getattr(ccxt, 'kraken')
@@ -42,21 +57,6 @@ class Account:
         # Load the BTC/USDT market
         print(self.kraken.load_markets())
         self.btcusdKraken = self.kraken.market('BTC/USDT')
-        
-
-        ### Bittrex
-        ## Does NOT have support for market orders
-        self.bittrexClass = getattr(ccxt, 'bittrex')
-        self.bittrex = self.bittrexClass({
-            'apiKey': self.apiDict['Bittrex'][0],
-            'secret': self.apiDict['Bittrex'][1],
-            'timeout': 30000,
-            'enableRateLimit': True,
-        })
-        # Load the markets
-        self.bittrex.load_markets()
-        # Load the BTC/USDT market
-        self.btcusdBittrex = self.bittrex.market('BTC/USDT')
 
         ### COSS
         ## DOES have support for market orders
