@@ -5,6 +5,12 @@ from Orders import LimitBuyOrder, LimitSellOrder
 import ccxt
 import time
 
+def printBalances():
+    print('Poloniex: USDT', account.poloniex.fetch_free_balance()['USDT'])
+    print('Poloniex: BTC', account.poloniex.fetch_free_balance()['BTC'])
+    print('Poloniex: USDC', account.poloniex.fetch_free_balance()['USDC'])
+    print('Bittrex: USDT', account.bittrex.fetch_free_balance()['USDT'])
+
 if __name__ == '__main__':
     # Test Account functionality
     account = Account()
@@ -12,16 +18,13 @@ if __name__ == '__main__':
     # Test Orders
 
     #account.addOpenOrder(limitBuyOrder)
-    print('Poloniex: USDT', account.poloniex.fetch_free_balance()['USDT'])
-    print('Poloniex: BTC', account.poloniex.fetch_free_balance()['BTC'])
-    print('Poloniex: USDC', account.poloniex.fetch_free_balance()['USDC'])
-    print('Bittrex: USDT', account.bittrex.fetch_free_balance()['USDT'])
-
-    #print('Poloniex: ', account.poloniex.fetch_order_book('BTC/USDT'))
+    #printBalances()
 
     #limitBuyOrder = LimitBuyOrder(account.poloniex, 'USDT/USDC', 2, 0.99)
     #print(limitBuyOrder.place())
     #print(limitBuyOrder.status())
+
+    print(account.poloniex.fetch_l2_order_book('BTC/USDT'))
 
     # Test WhaleAlert functionality
     #w = WhaleAlert()
