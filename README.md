@@ -1,5 +1,6 @@
 # Introduction
-This is a framework for trading cryptocurrencies built on top of the ccxt library.
+This is a framework for trading cryptocurrencies built on top of the ccxt library.  
+This also includes the early stages of a Twitter Sentiment analysis bot for crypto trading.  There is a separate README for that project.
 
 ## Supported Exchanges
 Poloniex  
