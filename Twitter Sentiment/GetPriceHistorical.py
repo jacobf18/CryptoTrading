@@ -51,6 +51,10 @@ def parse_args():
                         choices=['1m', '5m','15m', '30m','1h', '2h', '3h', '4h', '6h', '12h', '1d', '1M', '1y'],
                         help='The timeframe to download')
 
+    parser.add_argument('--since',
+                        type=int,
+                        required=False)
+
 
     parser.add_argument('--debug',
                             action ='store_true',
@@ -64,6 +68,7 @@ args = parse_args()
 # Get our Exchange
 try:
     exchange = getattr (ccxt, args.exchange) ()
+
 except AttributeError:
     print('-'*36,' ERROR ','-'*35)
     print('Exchange "{}" not found. Please check the exchange is supported.'.format(args.exchange))
@@ -100,7 +105,7 @@ if args.symbol not in exchange.symbols:
 
 
 # Get data
-data = exchange.fetch_ohlcv(args.symbol, args.timeframe)
+data = exchange.fetch_ohlcv(args.symbol, args.timeframe, since=args.since)
 header = ['Timestamp', 'Open', 'High', 'Low', 'Close', 'Volume']
 df = pd.DataFrame(data, columns=header).set_index('Timestamp')
 # Save it
